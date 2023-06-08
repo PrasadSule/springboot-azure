@@ -2,6 +2,28 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.0'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id "com.microsoft.azure.azurewebapp" version "1.7.1"
+}
+
+azurewebapp {
+	subscription = '71d821e9-c86b-453d-bf39-6fe455263cdb'
+	resourceGroup = 'Prasad-react'
+	appName = 'Navipin-react-practice'
+	pricingTier = 'P1v2'
+	region = 'westus'
+	runtime {
+		os = 'Linux'
+		webContainer = 'Tomcat 9.0' // or 'Java SE' if you want to run an executable jar
+		javaVersion = 'Java 8'
+	}
+	appSettings {
+		// Add your key-value pairs here
+		key1 = 'value1'
+		key2 = 'value2'
+	}
+	auth {
+		type = 'azure_cli' // support azure_cli, oauth2, device_code, and service_principal
+	}
 }
 
 group = 'com.Unikey'
@@ -23,6 +45,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
 bootRun {
 	systemProperty 'spring.profiles.active', 'dev'
 }

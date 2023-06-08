@@ -1,0 +1,110 @@
+package com.Unikey.Navipinprac;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
+
+@SpringBootApplication
+@RestController
+public class NavipinPracApplication {
+
+	@GetMapping
+	public String welcom(){
+		return "Welcome to Mercedes-Benz";
+	}
+
+	@GetMapping("/user")
+	public Principal user(Principal principal){
+		System.out.println("User Name : "+principal.getName());
+		return principal;
+	}
+
+	@GetMapping("/api/v1")
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("Hell OAuth2");
+    }
+	public static void main(String[] args) {
+		SpringApplication.run(NavipinPracApplication.class, args);
+	}
+
+}
+
+
+package com.Unikey.Navipinprac;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .oauth2Login()
+        ;
+        return http.build();
+    }
+}
+
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 04edb4fce977f7eb34f8
+            clientSecret: 4c3bdc2c6aa5be621e1ef6e5364b9f403b8644b8
+
+
+
+server:
+  port: 8080
+
+
+
+
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.Unikey'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.security:spring-security-core:6.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:3.1.0'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+bootRun {
+	systemProperty 'spring.profiles.active', 'dev'
+}

@@ -1,0 +1,10 @@
+1) Run the SpringBoot application
+
+2) go to the chrome browser and write the url -> localhost:8080
+
+#gitHub login window will come
+
+3)Enter the Email Id and Password of your GitHub account
+
+4)if Email and Password is correct then login will happen,  
+   otherwise it will say incorrect email id and password  
