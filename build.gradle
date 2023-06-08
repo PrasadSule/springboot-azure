@@ -8,7 +8,7 @@ plugins {
 azurewebapp {
 	subscription = '71d821e9-c86b-453d-bf39-6fe455263cdb'
 	resourceGroup = 'Prasad-react'
-	appName = 'Navipin-react-practice'
+	appName = 'spring-practice'
 	pricingTier = 'P1v2'
 	region = 'westus'
 	runtime {
